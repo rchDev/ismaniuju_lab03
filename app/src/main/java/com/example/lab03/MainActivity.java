@@ -1,6 +1,9 @@
 package com.example.lab03;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.lab03.model.FormData;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private FormData formData;
@@ -58,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
         SwitchCompat registerSwitch = findViewById(R.id.sw_register);
 
         Button submitButton = findViewById(R.id.btn_submit);
-        registerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            submitButton.setEnabled(isChecked);
-        });
+        registerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> submitButton.setEnabled(isChecked));
 
         submitButton.setEnabled(registerSwitch.isChecked());
 
+        View rootView = findViewById(android.R.id.content);
+
         submitButton.setOnClickListener(v -> {
-            if (registerSwitch.isChecked()) {
+            if (!registerSwitch.isChecked()) {
                 Toast.makeText(this, "You should not be here", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -74,7 +78,18 @@ public class MainActivity extends AppCompatActivity {
             var difficulty = difficultyRating.getRating();
             var city = citySelect.getSelectedItem().toString();
             formData = new FormData(fullName, department, difficulty, dp, tp, city);
-            formData.saveToFile(MainActivity.this);
+            Snackbar snackbar = Snackbar.make(rootView, formData.toString(), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Patvirtinu, informacija teisinga", v1 -> {
+                        formData.saveToFile(MainActivity.this);
+                        Snackbar.make(rootView, "Duomenys įrašyti sėkmingai", Snackbar.LENGTH_SHORT)
+                                .show();
+                    });
+            snackbar.show();
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                Snackbar.make(rootView, "Laikas baigėsi, bandykite dar kartą", Snackbar.LENGTH_SHORT)
+                        .show();
+                snackbar.dismiss();
+            }, 6000);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
