@@ -8,7 +8,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -19,8 +18,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.lab03.model.FormData;
 
+public class MainActivity extends AppCompatActivity {
+    private FormData formData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,40 +29,59 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        EditText fullName = findViewById(R.id.et_full_name);
+        EditText fullNameEditText = findViewById(R.id.et_full_name);
 
-        AutoCompleteTextView autoPadalinys = findViewById(R.id.auto_department);
-        ArrayAdapter<CharSequence> padaliniaiAdapter = ArrayAdapter.createFromResource(
+        AutoCompleteTextView autoDepartment = findViewById(R.id.auto_department);
+        ArrayAdapter<CharSequence> departmentsAdapter = ArrayAdapter.createFromResource(
                 this, R.array.padaliniai, android.R.layout.simple_list_item_1
         );
-        autoPadalinys.setAdapter(padaliniaiAdapter);
+        autoDepartment.setAdapter(departmentsAdapter);
 
-        autoPadalinys.setOnItemClickListener((parent, v, position, id) -> {
+        autoDepartment.setOnItemClickListener((parent, v, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
-            Toast.makeText(this, "Pasirinktote: " + selected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pasirinkote: " + selected, Toast.LENGTH_SHORT).show();
         });
 
-        RatingBar complexityRating = findViewById(R.id.rb_difficulty);
+        RatingBar difficultyRating = findViewById(R.id.rb_difficulty);
 
         TimePicker tp = findViewById(R.id.tp_time);
         tp.setIs24HourView(true);
 
         DatePicker dp = findViewById(R.id.dp_date);
 
-        Spinner citiesSelect = findViewById(R.id.spn_cities);
+        Spinner citySelect = findViewById(R.id.spn_cities);
         ArrayAdapter<CharSequence> lithuaniaCitiesAdapter = ArrayAdapter.createFromResource(
                 this, R.array.LithuaniaCities126, android.R.layout.simple_list_item_1
         );
-        citiesSelect.setAdapter(lithuaniaCitiesAdapter);
+        citySelect.setAdapter(lithuaniaCitiesAdapter);
+
+        SwitchCompat registerSwitch = findViewById(R.id.sw_register);
+
+        Button submitButton = findViewById(R.id.btn_submit);
+        registerSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            submitButton.setEnabled(isChecked);
+        });
+
+        submitButton.setEnabled(registerSwitch.isChecked());
+
+        submitButton.setOnClickListener(v -> {
+            if (registerSwitch.isChecked()) {
+                Toast.makeText(this, "You should not be here", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            var fullName = fullNameEditText.getText().toString();
+            var department = autoDepartment.getText().toString();
+            var difficulty = difficultyRating.getRating();
+            var city = citySelect.getSelectedItem().toString();
+            formData = new FormData(fullName, department, difficulty, dp, tp, city);
+            formData.saveToFile(MainActivity.this);
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        SwitchCompat registerSwitch = findViewById(R.id.sw_register);
-        Button submitButton = findViewById(R.id.btn_submit);
 
     }
 }
