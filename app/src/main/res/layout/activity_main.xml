@@ -21,13 +21,15 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:gravity="start"
+            android:gravity="center"
             android:minWidth="488dp">
 
             <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/full_name_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:minHeight="48dp"
                 android:layout_weight="1"
                 android:text="@string/full_name_label"
                 android:textStyle="bold"
@@ -45,7 +47,7 @@
                 android:inputType="textPersonName"
                 android:maxWidth="487dp"
                 android:minHeight="48dp"
-                android:textColor="#6E6A71" />
+                android:textColorHint="#6C646D"/>
         </TableRow>
 
         <TableRow
