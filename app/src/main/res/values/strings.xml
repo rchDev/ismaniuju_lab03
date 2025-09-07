@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Lab03</string>
+    <string name="full_name_label">Vardas ir pavarde:</string>
+    <string name="full_name_hint">Įveskike vardą ir pavardę</string>
+    <string name="department_label">Padalinys:</string>
+    <string name="difficulty_label">Sudėtingumas:</string>
+    <string name="time_label">Laikas:</string>
+    <string name="date_label">Data:</string>
+    <string name="city_select_label">Pasirinkite miestą:</string>
+    <string name="registration_switch_text">Registruoti</string>
+    <string name="submit_button_text">Saugoti</string>
     <string-array name="padaliniai">
         <item>Finansų direkcija</item>
         <item>Edukacinių kompetencijų grupė</item>

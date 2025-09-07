@@ -15,13 +15,8 @@ public class FormData {
     private String fullName;
     private String department;
     private float difficulty;
-    private int hour;
-    private int minute;
-    private int year;
-    private int month;
-    private int day;
-    private String formatedTime;
-    private String formatedDate;
+    private final String formatedTime;
+    private final String formatedDate;
     private String city;
 
     public FormData(String fullName, String department, float difficulty, DatePicker datePicker, TimePicker timePicker, String city) {
@@ -29,11 +24,11 @@ public class FormData {
         this.department = department;
         this.difficulty = difficulty;
         this.city = city;
-        this.hour = timePicker.getHour();
-        this.minute = timePicker.getMinute();
-        this.year = datePicker.getYear();
-        this.month = datePicker.getMonth();
-        this.day = datePicker.getDayOfMonth();
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+        int year = datePicker.getYear();
+        int month = datePicker.getMonth();
+        int day = datePicker.getDayOfMonth();
         this.formatedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, day);
         this.formatedTime = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
     }

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(rootView, "Laikas baigėsi, bandykite dar kartą", Snackbar.LENGTH_SHORT)
                         .show();
                 snackbar.dismiss();
-            }, 6000);
+            }, 5000);
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
