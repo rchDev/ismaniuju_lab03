@@ -1,9 +1,9 @@
 package com.example.lab03;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AutoCompleteTextView autoPadalinys = findViewById(R.id.autoPadalinys);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> padaliniaiAdapter = ArrayAdapter.createFromResource(
                 this, R.array.padaliniai, android.R.layout.simple_list_item_1
         );
-        autoPadalinys.setAdapter(adapter);
+        autoPadalinys.setAdapter(padaliniaiAdapter);
 
         autoPadalinys.setOnItemClickListener((parent, v, position, id) -> {
             String selected = (String) parent.getItemAtPosition(position);
@@ -38,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         TimePicker tp = findViewById(R.id.timePicker);
         tp.setIs24HourView(true);
+
+        Spinner citiesSelect = findViewById(R.id.spinnerCities);
+        ArrayAdapter<CharSequence> lithuaniaCitiesAdapter = ArrayAdapter.createFromResource(
+                this, R.array.LithuaniaCities126, android.R.layout.simple_list_item_1
+        );
+        citiesSelect.setAdapter(lithuaniaCitiesAdapter);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
