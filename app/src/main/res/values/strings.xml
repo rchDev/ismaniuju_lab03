@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Lab03</string>
+    <string-array name="padaliniai">
+        <item>Finansų direkcija</item>
+        <item>Edukacinių kompetencijų grupė</item>
+        <item>Aeronautikos laboratorija</item>
+        <item>Aeronautikos inžinerijos katedra</item>
+        <item>Skaitmeninė laboratorija</item>
+        <item>Ūkio direkcija</item>
+        <item>Ūkio skyrius</item>
+    </string-array>
+</resources>
